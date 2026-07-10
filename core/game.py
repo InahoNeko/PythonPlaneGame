@@ -8,7 +8,6 @@ from manager.score_manager import ScoreManager
 from manager.effect_manager import EffectManager
 from manager.sound_manager import SoundManager
 from manager.asset_manager import AssetManager
-from manager.timer_manager import TimerManager
 from core.game_state import GameState
 from ui.ui_manager import UIManager
 
@@ -23,7 +22,6 @@ class Game:
         self.enemies_manager = EnemyManager()
         self.sound_manager = SoundManager()
         self.asset_manager = AssetManager()
-        self.timer_manager = TimerManager()
         self.bullet_manager = BulletManager(self.sound_manager)
         self.score_manager = ScoreManager()
         self.effect_manager = EffectManager()
@@ -146,7 +144,6 @@ class Game:
 
         self.score_manager.restart()
 
-        self.timer_manager.restart()
 
         self.effect_manager.restart()
 

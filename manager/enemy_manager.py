@@ -1,7 +1,6 @@
-import pygame
-
 from entities.enemy import Enemy
 from config.settings import MAX_ENEMY, SPAWN_DELAY
+from manager.timer_manager import TimerManager
 
 
 class EnemyManager:
@@ -9,7 +8,10 @@ class EnemyManager:
     def __init__(self):
 
         self.enemies = []
-        self.spawn_timer = pygame.time.get_ticks()
+
+        self.timer_manager = TimerManager()
+
+        self.timer_manager.start("spawn")
 
     # ======================
     # 更新敌人
@@ -43,10 +45,10 @@ class EnemyManager:
         if len(self.enemies) < MAX_ENEMY:
 
             self.enemies.append(
+
                 Enemy()
+
             )
-
-
 
     # ======================
     # 删除敌人
@@ -65,6 +67,24 @@ class EnemyManager:
         ]
 
     # ======================
+    # 更新敌人生成
+    # ======================
+
+    def update_enemy_add(self):
+
+        if self.timer_manager.is_timeout(
+
+            "spawn",
+
+            SPAWN_DELAY
+
+        ):
+
+            self.spawn_enemy()
+
+            self.timer_manager.reset("spawn")
+
+    # ======================
     # 重启
     # ======================
 
@@ -72,11 +92,6 @@ class EnemyManager:
 
         self.enemies = []
 
-    def update_enemy_add(self):
+        self.timer_manager.restart()
 
-        current_time = pygame.time.get_ticks()
-
-        if current_time - self.spawn_timer >= SPAWN_DELAY:
-            self.spawn_enemy()
-
-            self.spawn_timer = current_time
+        self.timer_manager.start("spawn")
