@@ -7,6 +7,7 @@ from core.collision_system import CollisionSystem
 from manager.score_manager import ScoreManager
 from manager.effect_manager import EffectManager
 from manager.sound_manager import SoundManager
+from manager.asset_manager import AssetManager
 from core.game_state import GameState
 from ui.ui_manager import UIManager
 
@@ -20,6 +21,7 @@ class Game:
         self.player_manager = PlayerManager()
         self.enemies_manager = EnemyManager()
         self.sound_manager = SoundManager()
+        self.asset_manager = AssetManager()
         self.bullet_manager = BulletManager(self.sound_manager)
         self.score_manager = ScoreManager()
         self.effect_manager = EffectManager()
