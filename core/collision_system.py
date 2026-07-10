@@ -116,7 +116,7 @@ class CollisionSystem:
             ):
                 print("碰到了！")
 
-                self.player_manager.player.die()
+                self.player_manager.player.hurt()
 
                 self.sound_manager.play("player_die")
 

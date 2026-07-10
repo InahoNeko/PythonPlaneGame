@@ -19,6 +19,16 @@ class Player:
 
         self.alive = True
 
+        self.max_hp = 3
+
+        self.hp = self.max_hp
+
+        self.invincible = False
+
+        self.invincible_time = 1000
+
+        self.hit_timer = 0
+
     # ======================
     # 移动
     # ======================
@@ -40,6 +50,11 @@ class Player:
         if keys[pygame.K_s]:
 
             self.y += self.speed
+
+        if self.invincible:
+
+            if pygame.time.get_ticks() - self.hit_timer >= self.invincible_time:
+                self.invincible = False
 
     # ======================
     # 边界检测
@@ -87,10 +102,31 @@ class Player:
 
         )
 
+    def hurt(self):
+
+        if self.invincible:
+            return
+
+        self.hp -= 1
+
+        print(f"HP : {self.hp}")
+
+        self.invincible = True
+
+        self.hit_timer = pygame.time.get_ticks()
+
+        if self.hp <= 0:
+            self.alive = False
+
     # ======================
     # 死亡
     # ======================
 
     def die(self):
 
-        self.alive = False
+        self.hp -= 1
+
+        print(f"HP : {self.hp}")
+
+        if self.hp <= 0:
+            self.alive = False

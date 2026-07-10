@@ -24,3 +24,7 @@ class PlayerManager:
 
     def restart(self):
         self.player = Player()
+
+        self.player.invincible = False
+
+        self.player.hit_timer = 0
