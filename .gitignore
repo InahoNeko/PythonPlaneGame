@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# PyCharm
+.idea/
+
+# VSCode
+.vscode/
+
+# Build
+build/
+dist/
+
+# PyInstaller
+*.spec
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store

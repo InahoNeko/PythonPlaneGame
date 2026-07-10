@@ -1,0 +1,28 @@
+# 窗口
+WIDTH = 600
+HEIGHT = 400
+FPS = 60
+TITLE = "Plane War"
+
+# 颜色
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+BLUE = (0, 0, 255)
+RED = (255, 0, 0)
+
+# 玩家
+PLAYER_SIZE = 20
+PLAYER_SPEED = 5
+
+# 敌人
+ENEMY_SIZE = 20
+ENEMY_SPEED = 2
+
+# 子弹
+BULLET_WIDTH = 5
+BULLET_HEIGHT = 5
+BULLET_SPEED = 8
+
+# 游戏
+MAX_ENEMY = 20
+SPAWN_DELAY = 2000
