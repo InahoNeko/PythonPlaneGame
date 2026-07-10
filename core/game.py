@@ -125,7 +125,9 @@ class Game:
 
             self.game_state,
 
-            self.score_manager
+            self.score_manager,
+
+            self.player_manager.player
 
         )
 
