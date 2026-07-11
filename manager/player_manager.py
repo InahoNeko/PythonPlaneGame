@@ -5,8 +5,9 @@ from entities.player import Player
 
 class PlayerManager:
 
-    def __init__(self):
-        self.player = Player()
+    def __init__(self,asset_manager):
+        self.player = Player(asset_manager)
+        self.asset_manager = asset_manager
 
     def update(self, keys):
         if not self.player.alive:
@@ -23,7 +24,7 @@ class PlayerManager:
         self.player.draw(screen)
 
     def restart(self):
-        self.player = Player()
+        self.player = Player(self.asset_manager)
 
         self.player.invincible = False
 

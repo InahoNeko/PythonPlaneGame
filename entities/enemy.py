@@ -1,4 +1,4 @@
-from config.settings import ENEMY_SIZE, ENEMY_SPEED,WIDTH,HEIGHT,RED
+from config.settings import *
 import pygame
 import random
 import math
@@ -6,7 +6,29 @@ import math
 class Enemy:
 
 
-    def __init__(self):
+    def __init__(self,asset_manager):
+
+        self.image_size = ENEMY_IMAGE_SIZE
+
+        self.image = asset_manager.get_image(
+
+            "enemy"
+
+        )
+
+        self.image = pygame.transform.scale(
+
+            self.image,
+
+            (
+
+                self.image_size,
+
+                self.image_size
+
+            )
+
+        )
 
         self.x = random.randint(
             0,
@@ -52,22 +74,36 @@ class Enemy:
                 self.speed
             )
 
+    def draw(self, screen):
 
+        if not self.alive:
+            return
 
-    def draw(self,screen):
+        image_x = self.x - (
 
-        if self.alive:
+                self.image_size - self.size
 
-            pygame.draw.rect(
-                screen,
-                RED,
-                (
-                    self.x,
-                    self.y,
-                    self.size,
-                    self.size
-                )
+        ) // 2
+
+        image_y = self.y - (
+
+                self.image_size - self.size
+
+        ) // 2
+
+        screen.blit(
+
+            self.image,
+
+            (
+
+                image_x,
+
+                image_y
+
             )
+
+        )
 
 
 

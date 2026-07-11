@@ -17,35 +17,34 @@ class Game:
 
     def __init__(self):
 
-
-        self.player_manager = PlayerManager()
-        self.enemies_manager = EnemyManager()
-        self.sound_manager = SoundManager()
-        self.load_sounds()
         self.asset_manager = AssetManager()
+
+        self.sound_manager = SoundManager()
+
+        # 先加载资源
         self.load_assets()
+        self.load_sounds()
+
+        # 再创建需要资源的对象
+        self.player_manager = PlayerManager(self.asset_manager)
+        self.enemies_manager = EnemyManager(self.asset_manager)
         self.bullet_manager = BulletManager(self.sound_manager)
+
         self.score_manager = ScoreManager()
         self.effect_manager = EffectManager()
+
         self.collision_system = CollisionSystem(
-
             self.player_manager,
-
             self.enemies_manager,
-
             self.bullet_manager,
-
             self.score_manager,
-
             self.effect_manager,
-
             self.sound_manager
-            
         )
 
         self.game_state = GameState()
-        self.ui_manager = UIManager(self.asset_manager)
 
+        self.ui_manager = UIManager(self.asset_manager)
     # ======================
     # 加载声音
     # ======================
@@ -86,6 +85,30 @@ class Game:
             "heart_empty",
 
             "assets/images/ui/heart_empty.png"
+
+        )
+
+        # ======================
+        # 玩家
+        # ======================
+
+        self.asset_manager.load_image(
+
+            "player",
+
+            "assets/images/player/player.png"
+
+        )
+
+        # ======================
+        # 敌人
+        # ======================
+
+        self.asset_manager.load_image(
+
+            "enemy",
+
+            "assets/images/enemy/enemy.png"
 
         )
     # ======================

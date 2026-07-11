@@ -1,3 +1,4 @@
+import pygame
 from entities.enemy import Enemy
 from config.settings import MAX_ENEMY, SPAWN_DELAY
 from manager.timer_manager import TimerManager
@@ -5,9 +6,13 @@ from manager.timer_manager import TimerManager
 
 class EnemyManager:
 
-    def __init__(self):
+    def __init__(self,asset_manager):
+
+        self.asset_manager = asset_manager
 
         self.enemies = []
+
+        self.spawn_timer = pygame.time.get_ticks()
 
         self.timer_manager = TimerManager()
 
@@ -46,7 +51,7 @@ class EnemyManager:
 
             self.enemies.append(
 
-                Enemy()
+                Enemy(self.asset_manager)
 
             )
 

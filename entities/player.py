@@ -5,9 +5,33 @@ from config.settings import *
 
 class Player:
 
-    def __init__(self):
+    def __init__(self,asset_manager):
 
         self.size = PLAYER_SIZE
+
+        self.image_size = PLAYER_IMAGE_SIZE
+
+        self.image_size = PLAYER_IMAGE_SIZE
+
+        self.image = asset_manager.get_image(
+
+            "player"
+
+        )
+
+        self.image = pygame.transform.scale(
+
+            self.image,
+
+            (
+
+                self.image_size,
+
+                self.image_size
+
+            )
+
+        )
 
         self.x = WIDTH // 2 - self.size // 2
 
@@ -87,17 +111,28 @@ class Player:
         if not self.alive:
             return
 
-        pygame.draw.rect(
+        image_x = self.x - (
 
-            screen,
+                self.image_size - self.size
 
-            self.color,
+        ) // 2
+
+        image_y = self.y - (
+
+                self.image_size - self.size
+
+        ) // 2
+
+        screen.blit(
+
+            self.image,
 
             (
-                self.x,
-                self.y,
-                self.size,
-                self.size
+
+                image_x,
+
+                image_y
+
             )
 
         )
