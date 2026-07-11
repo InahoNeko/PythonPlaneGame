@@ -1,4 +1,5 @@
 import pygame
+import math
 
 from config.settings import *
 
@@ -6,6 +7,10 @@ from config.settings import *
 class Player:
 
     def __init__(self,asset_manager):
+
+        self.engine_time = 0
+
+        self.engine_scale = 1.0
 
         self.size = PLAYER_SIZE
 
@@ -26,6 +31,32 @@ class Player:
                 self.image_size,
 
                 self.image_size
+
+            )
+
+        )
+
+        # ======================
+        # 尾焰
+        # ======================
+
+        self.engine_size = PLAYER_IMAGE_SIZE // 2
+
+        self.engine_image = asset_manager.get_image(
+
+            "engine"
+
+        )
+
+        self.engine_image = pygame.transform.scale(
+
+            self.engine_image,
+
+            (
+
+                self.engine_size,
+
+                self.engine_size
 
             )
 
@@ -80,6 +111,12 @@ class Player:
             if pygame.time.get_ticks() - self.hit_timer >= self.invincible_time:
                 self.invincible = False
 
+        self.engine_time += 0.18
+
+        self.engine_scale = 1 + math.sin(
+            self.engine_time
+        ) * 0.08
+
     # ======================
     # 边界检测
     # ======================
@@ -106,6 +143,84 @@ class Player:
     # 绘制
     # ======================
 
+    def draw_engine(
+
+            self,
+
+            screen,
+
+            image_x,
+
+            image_y
+
+    ):
+
+        # 当前尾焰高度
+        current_height = int(
+
+            self.engine_size *
+
+            self.engine_scale
+
+        )
+
+        # 呼吸缩放（只拉伸高度）
+        engine_image = pygame.transform.smoothscale(
+
+            self.engine_image,
+
+            (
+
+                self.engine_size,
+
+                current_height
+
+            )
+
+        )
+
+        # X 保持居中
+        engine_x = image_x + (
+
+                self.image_size -
+
+                self.engine_size
+
+        ) // 2
+
+        # 固定喷口位置
+        engine_y = (
+
+                image_y +
+
+                self.image_size -
+
+                8 -
+
+                (
+
+                        current_height -
+
+                        self.engine_size
+
+                )
+
+        )
+
+        screen.blit(
+
+            engine_image,
+
+            (
+
+                engine_x,
+
+                engine_y
+
+            )
+
+        )
+
     def draw(self, screen):
 
         if not self.alive:
@@ -129,6 +244,16 @@ class Player:
                 self.image_size - self.size
 
         ) // 2
+
+        self.draw_engine(
+
+            screen,
+
+            image_x,
+
+            image_y
+
+        )
 
         screen.blit(
 

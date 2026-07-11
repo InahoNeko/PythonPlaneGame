@@ -114,6 +114,18 @@ class Game:
         )
 
         # ======================
+        # 玩家尾焰
+        # ======================
+
+        self.asset_manager.load_image(
+
+            "engine",
+
+            "assets/images/player/engine.png"
+
+        )
+
+        # ======================
         # 敌人
         # ======================
 
