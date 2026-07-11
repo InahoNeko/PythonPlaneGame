@@ -1,6 +1,6 @@
 # 窗口
-WIDTH = 600
-HEIGHT = 400
+WIDTH = 900
+HEIGHT = 750
 FPS = 60
 TITLE = "Plane War"
 

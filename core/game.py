@@ -1,5 +1,6 @@
 import pygame
 
+from manager.background_manager import BackgroundManager
 from manager.player_manager import PlayerManager
 from manager.enemy_manager import EnemyManager
 from manager.bullet_manager import BulletManager
@@ -8,6 +9,7 @@ from manager.score_manager import ScoreManager
 from manager.effect_manager import EffectManager
 from manager.sound_manager import SoundManager
 from manager.asset_manager import AssetManager
+
 from core.game_state import GameState
 from ui.ui_manager import UIManager
 
@@ -24,6 +26,9 @@ class Game:
         # 先加载资源
         self.load_assets()
         self.load_sounds()
+        self.background_manager = BackgroundManager(
+            self.asset_manager
+        )
 
         # 再创建需要资源的对象
         self.player_manager = PlayerManager(self.asset_manager)
@@ -74,6 +79,14 @@ class Game:
 
         self.asset_manager.load_image(
 
+            "background",
+
+            "assets/images/background/background.png"
+
+        )
+
+        self.asset_manager.load_image(
+
             "heart_full",
 
             "assets/images/ui/heart_full.png"
@@ -119,6 +132,8 @@ class Game:
 
         if self.game_state.is_playing():
 
+            self.background_manager.update()
+
             self.player_manager.update(keys)
 
             self.enemies_manager.update(self.player_manager.player)
@@ -152,6 +167,8 @@ class Game:
     # ======================
 
     def draw(self, screen):
+
+        self.background_manager.draw(screen)
 
         self.player_manager.draw(screen)
 
