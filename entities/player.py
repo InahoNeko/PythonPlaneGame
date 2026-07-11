@@ -11,8 +11,6 @@ class Player:
 
         self.image_size = PLAYER_IMAGE_SIZE
 
-        self.image_size = PLAYER_IMAGE_SIZE
-
         self.image = asset_manager.get_image(
 
             "player"
@@ -49,9 +47,11 @@ class Player:
 
         self.invincible = False
 
-        self.invincible_time = 1000
-
         self.hit_timer = 0
+
+        self.invincible_time = 800  # 毫秒
+
+        self.flash_interval = 100  # 每100毫秒闪一次
 
     # ======================
     # 移动
@@ -111,6 +111,13 @@ class Player:
         if not self.alive:
             return
 
+        if self.invincible:
+
+            current_time = pygame.time.get_ticks()
+
+            if (current_time // self.flash_interval) % 2 == 0:
+                return
+
         image_x = self.x - (
 
                 self.image_size - self.size
@@ -137,7 +144,7 @@ class Player:
 
         )
 
-    def hurt(self):
+    def take_damage(self):
 
         if self.invincible:
             return
@@ -151,7 +158,7 @@ class Player:
         self.hit_timer = pygame.time.get_ticks()
 
         if self.hp <= 0:
-            self.alive = False
+            self.die()
 
     # ======================
     # 死亡
@@ -159,9 +166,5 @@ class Player:
 
     def die(self):
 
-        self.hp -= 1
 
-        print(f"HP : {self.hp}")
-
-        if self.hp <= 0:
             self.alive = False

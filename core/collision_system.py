@@ -1,3 +1,6 @@
+from entities.player import Player
+
+
 class CollisionSystem:
 
     def __init__(
@@ -116,7 +119,7 @@ class CollisionSystem:
             ):
 
 
-                self.player_manager.player.hurt()
+                self.player_manager.player.take_damage()
 
                 self.sound_manager.play("player_die")
 
