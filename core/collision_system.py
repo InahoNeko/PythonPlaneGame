@@ -1,5 +1,3 @@
-from entities.player import Player
-
 
 class CollisionSystem:
 
@@ -10,7 +8,8 @@ class CollisionSystem:
         bullet_manager,
         score_manager,
         effect_manager,
-        sound_manager
+        sound_manager,
+        camera_manager
     ):
 
         self.player_manager = player_manager
@@ -24,6 +23,8 @@ class CollisionSystem:
         self.effect_manager = effect_manager
 
         self.sound_manager = sound_manager
+
+        self.camera_manager = camera_manager
 
     def bullet_hit_enemy(self, enemy):
         if not enemy.alive:
@@ -53,6 +54,11 @@ class CollisionSystem:
 
 
                 bullet.die()
+
+                self.camera_manager.shake(
+                    intensity=6,
+                    duration=120
+                )
 
                 print("击中敌人！")
 
@@ -120,6 +126,11 @@ class CollisionSystem:
 
 
                 self.player_manager.player.take_damage()
+
+                self.camera_manager.shake(
+                    intensity=10,
+                    duration=180
+                )
 
                 self.sound_manager.play("player_die")
 

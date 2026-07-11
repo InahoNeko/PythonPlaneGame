@@ -1,5 +1,6 @@
 import pygame
 
+from config.settings import *
 from manager.background_manager import BackgroundManager
 from manager.player_manager import PlayerManager
 from manager.enemy_manager import EnemyManager
@@ -9,6 +10,7 @@ from manager.score_manager import ScoreManager
 from manager.effect_manager import EffectManager
 from manager.sound_manager import SoundManager
 from manager.asset_manager import AssetManager
+from manager.camera_manager import CameraManager
 
 from core.game_state import GameState
 from ui.ui_manager import UIManager
@@ -22,6 +24,12 @@ class Game:
         self.asset_manager = AssetManager()
 
         self.sound_manager = SoundManager()
+
+        # ======================
+        # Camera
+        # ======================
+
+        self.camera_manager = CameraManager()
 
         # 先加载资源
         self.load_assets()
@@ -44,12 +52,31 @@ class Game:
             self.bullet_manager,
             self.score_manager,
             self.effect_manager,
-            self.sound_manager
+            self.sound_manager,
+            self.camera_manager
         )
 
         self.game_state = GameState()
 
         self.ui_manager = UIManager(self.asset_manager)
+
+
+
+        # ======================
+        # 世界画布（Camera）
+        # ======================
+
+        self.world_surface = pygame.Surface(
+
+            (
+
+                WIDTH,
+
+                HEIGHT
+
+            )
+
+        )
     # ======================
     # 加载声音
     # ======================
@@ -171,6 +198,8 @@ class Game:
 
                 self.game_state.game_over()
 
+            self.camera_manager.update()
+
         self.check_restart(keys)
 
 
@@ -180,15 +209,63 @@ class Game:
 
     def draw(self, screen):
 
-        self.background_manager.draw(screen)
+        # ======================
+        # 清空世界画布
+        # ======================
 
-        self.player_manager.draw(screen)
+        self.world_surface.fill((0, 0, 0))
 
-        self.enemies_manager.draw(screen)
+        # ======================
+        # 绘制游戏世界
+        # ======================
 
-        self.bullet_manager.draw(screen)
+        self.background_manager.draw(
 
-        self.effect_manager.draw(screen)
+            self.world_surface
+
+        )
+
+        self.player_manager.draw(
+
+            self.world_surface
+
+        )
+
+        self.enemies_manager.draw(
+
+            self.world_surface
+
+        )
+
+        self.bullet_manager.draw(
+
+            self.world_surface
+
+        )
+
+        self.effect_manager.draw(
+
+            self.world_surface
+
+        )
+
+        # ======================
+        # 世界画布绘制到屏幕
+        # ======================
+
+        offset = self.camera_manager.get_offset()
+
+        screen.blit(
+
+            self.world_surface,
+
+            offset
+
+        )
+
+        # ======================
+        # 绘制 UI
+        # ======================
 
         self.ui_manager.draw(
 
