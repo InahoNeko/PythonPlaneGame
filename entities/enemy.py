@@ -39,6 +39,7 @@ class Enemy:
 
         self.size = ENEMY_SIZE
         self.speed = ENEMY_SPEED
+        self.angle = 0
 
 
         self.alive = True
@@ -74,34 +75,48 @@ class Enemy:
                 self.speed
             )
 
+        self.angle = math.degrees(
+
+            math.atan2(
+
+                dy,
+
+                dx
+
+            )
+
+        ) + 90
+
     def draw(self, screen):
 
         if not self.alive:
             return
 
-        image_x = self.x - (
-
-                self.image_size - self.size
-
-        ) // 2
-
-        image_y = self.y - (
-
-                self.image_size - self.size
-
-        ) // 2
-
-        screen.blit(
+        rotated_image = pygame.transform.rotate(
 
             self.image,
 
-            (
+            -self.angle
 
-                image_x,
+        )
 
-                image_y
+        rect = rotated_image.get_rect(
+
+            center=(
+
+                self.x + self.size // 2,
+
+                self.y + self.size // 2
 
             )
+
+        )
+
+        screen.blit(
+
+            rotated_image,
+
+            rect
 
         )
 
