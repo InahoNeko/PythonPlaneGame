@@ -3,7 +3,11 @@ import pygame
 
 class HUD:
 
-    def __init__(self):
+    def __init__(self,asset_manager):
+
+        # ======================
+        # 字体
+        # ======================
 
         self.font = pygame.font.SysFont(
             None,
@@ -11,26 +15,62 @@ class HUD:
         )
 
         # ======================
-        # 加载爱心图片
+        # HUD布局
         # ======================
 
-        self.heart_full = pygame.image.load(
-            "assets/images/ui/heart_full.png"
-        ).convert_alpha()
+        self.margin = 15              # 左上边距
+        self.score_y = 15             # 分数Y坐标
+        self.health_y = 55            # 血量Y坐标
 
-        self.heart_empty = pygame.image.load(
-            "assets/images/ui/heart_empty.png"
-        ).convert_alpha()
+        self.heart_size = 32          # 爱心大小
+        self.heart_spacing = 40       # 爱心间距
 
-        # 缩放到 32×32
+        # ======================
+        # 加载图片
+        # ======================
+
+        self.heart_full = asset_manager.get_image(
+
+            "heart_full"
+
+        )
+
+        self.heart_empty = asset_manager.get_image(
+
+            "heart_empty"
+
+        )
+
+        # ======================
+        # 缩放图片
+        # ======================
+
         self.heart_full = pygame.transform.scale(
+
             self.heart_full,
-            (32, 32)
+
+            (
+
+                self.heart_size,
+
+                self.heart_size
+
+            )
+
         )
 
         self.heart_empty = pygame.transform.scale(
+
             self.heart_empty,
-            (32, 32)
+
+            (
+
+                self.heart_size,
+
+                self.heart_size
+
+            )
+
         )
 
     # ======================
@@ -38,10 +78,15 @@ class HUD:
     # ======================
 
     def draw(
+
             self,
+
             screen,
+
             score_manager,
+
             player
+
     ):
 
         self.draw_score(
@@ -65,9 +110,13 @@ class HUD:
     # ======================
 
     def draw_score(
+
             self,
+
             screen,
+
             score_manager
+
     ):
 
         text = self.font.render(
@@ -84,7 +133,13 @@ class HUD:
 
             text,
 
-            (15, 15)
+            (
+
+                self.margin,
+
+                self.score_y
+
+            )
 
         )
 
@@ -93,41 +148,35 @@ class HUD:
     # ======================
 
     def draw_health(
+
             self,
+
             screen,
+
             player
+
     ):
 
         for i in range(player.max_hp):
 
             if i < player.hp:
 
-                screen.blit(
-
-                    self.heart_full,
-
-                    (
-
-                        15 + i * 40,
-
-                        55
-
-                    )
-
-                )
+                image = self.heart_full
 
             else:
 
-                screen.blit(
+                image = self.heart_empty
 
-                    self.heart_empty,
+            screen.blit(
 
-                    (
+                image,
 
-                        15 + i * 40,
+                (
 
-                        55
+                    self.margin + i * self.heart_spacing,
 
-                    )
+                    self.health_y
 
                 )
+
+            )

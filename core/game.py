@@ -21,7 +21,9 @@ class Game:
         self.player_manager = PlayerManager()
         self.enemies_manager = EnemyManager()
         self.sound_manager = SoundManager()
+        self.load_sounds()
         self.asset_manager = AssetManager()
+        self.load_assets()
         self.bullet_manager = BulletManager(self.sound_manager)
         self.score_manager = ScoreManager()
         self.effect_manager = EffectManager()
@@ -42,33 +44,50 @@ class Game:
         )
 
         self.game_state = GameState()
-        self.ui_manager = UIManager()
-        self.sound_manager.load(
+        self.ui_manager = UIManager(self.asset_manager)
 
+    # ======================
+    # 加载声音
+    # ======================
+
+    def load_sounds(self):
+
+        self.sound_manager.load(
             "shoot",
-
             "assets/sounds/shoot.wav"
-
         )
 
         self.sound_manager.load(
-
             "explosion",
-
             "assets/sounds/explosion.wav"
-
         )
 
         self.sound_manager.load(
-
             "player_die",
-
             "assets/sounds/player_die.wav"
+        )
+
+    # ======================
+    # 加载图片
+    # ======================
+
+    def load_assets(self):
+
+        self.asset_manager.load_image(
+
+            "heart_full",
+
+            "assets/images/ui/heart_full.png"
 
         )
-        
 
+        self.asset_manager.load_image(
 
+            "heart_empty",
+
+            "assets/images/ui/heart_empty.png"
+
+        )
     # ======================
     # 更新游戏
     # ======================

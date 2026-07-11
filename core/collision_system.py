@@ -114,7 +114,7 @@ class CollisionSystem:
                     enemy.y
 
             ):
-                print("碰到了！")
+
 
                 self.player_manager.player.hurt()
 

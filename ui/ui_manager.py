@@ -5,10 +5,10 @@ from ui.health_ui import HealthUI
 
 class UIManager:
 
-    def __init__(self):
+    def __init__(self,asset_manager):
 
         self.game_over_ui = GameOverUI()
-        self.hud = HUD()
+        self.hud = HUD(asset_manager)
         self.health_ui = HealthUI()
 
     def draw(
